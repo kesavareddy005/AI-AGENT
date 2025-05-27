@@ -73,55 +73,8 @@ This notebook leverages transfer learning for efficient and accurate image class
 
 ---
 
-## 💻 4. Project Code
 
-### IMDB (1).ipynb
-```python
-import pandas as pd
-import torch
-from torch import nn
-from torch.utils.data import DataLoader, Dataset
-# ... data preprocessing code
-# Model architecture
-class SentimentRNN(nn.Module):
-    def __init__(self, vocab_size, embed_dim, hidden_dim, output_dim):
-        super(SentimentRNN, self).__init__()
-        self.embedding = nn.Embedding(vocab_size, embed_dim)
-        self.rnn = nn.LSTM(embed_dim, hidden_dim, batch_first=True)
-        self.fc = nn.Linear(hidden_dim, output_dim)
-        
-    def forward(self, x):
-        x = self.embedding(x)
-        _, (hidden, _) = self.rnn(x)
-        return self.fc(hidden[-1])
-import torch.nn.functional as F
-
-class HealthCareMLP(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super(HealthCareMLP, self).__init__()
-        self.fc1 = nn.Linear(input_size, hidden_size)
-        self.fc2 = nn.Linear(hidden_size, output_size)
-        
-    def forward(self, x):
-        x = F.relu(self.fc1(x))
-        return self.fc2(x)
-from torchvision import datasets, transforms, models
-
-# Data augmentation
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.RandomHorizontalFlip(),
-    transforms.ToTensor(),
-])
-
-train_data = datasets.ImageFolder(train_path, transform=transform)
-train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
-
-# Model: Transfer Learning
-model = models.resnet18(pretrained=True)
-model.fc = nn.Linear(model.fc.in_features, 2)  # 2 classes: cat and dog
----
-📊 5. Output
+###📊 4. Output
 IMDB Sentiment Analysis
 Accuracy: ~85%
 
@@ -145,7 +98,7 @@ Accuracy: ~90%
 Sample Prediction:
 ---
 
-📈 6. Further Research
+###📈 5. Further Research
 Each project offers rich opportunities for further research:
 
 IMDB Sentiment Analysis
@@ -169,12 +122,12 @@ Test on more complex image datasets.
 
 Implement real-time image classification as a web app.
 
-📜 7. Conclusion
+###📜 7. Conclusion
 This repository demonstrates practical applications of machine learning and deep learning in natural language processing, tabular classification, and computer vision. It provides robust implementations that can be extended for real-world scenarios.
 
 We hope this documentation helps you understand and replicate these projects with ease. For detailed implementation, please refer to the respective Jupyter notebooks in this repository.
 
-🚀 8. References & Resources
+###🚀 8. References & Resources
 PyTorch Documentation
 
 Kaggle Datasets
