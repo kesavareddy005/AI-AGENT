@@ -245,9 +245,6 @@ By leveraging classification models and visualizations, this project gives insig
 - Accuracy scores of trained models vary between **80% to 90%** depending on the algorithm used.
 - Confusion matrices and classification reports are used to evaluate model effectiveness.
 
-### Visualization Example
-
-![Sample Graph Placeholder](https://via.placeholder.com/400x300?text=Sample+Graphs)
 
 ---
 
