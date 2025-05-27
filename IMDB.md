@@ -151,11 +151,6 @@ This project demonstrates how deep learning models can extract insights from tex
 
 The model achieves a validation accuracy in the range of **85% to 90%**, indicating strong capability in classifying sentiment from text.
 
-### Visualization Example
-
-You can visualize training metrics such as loss and accuracy using the following plots:
-
-![Sample Graph Placeholder](https://via.placeholder.com/400x300?text=Sample+Graphs)
 
 ---
 
