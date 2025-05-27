@@ -203,8 +203,7 @@ This project highlights the workflow of deep learning pipelines and the practica
 ### Model Performance
 The model achieves ~85-90% accuracy on the validation set after 10 epochs, showing a solid performance in distinguishing cats from dogs.
 
-### Sample Predictions
-![Sample Prediction Placeholder](https://via.placeholder.com/400x300?text=Sample+Predictions)
+
 
 ---
 
