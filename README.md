@@ -120,6 +120,7 @@ train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
 # Model: Transfer Learning
 model = models.resnet18(pretrained=True)
 model.fc = nn.Linear(model.fc.in_features, 2)  # 2 classes: cat and dog
+---
 📊 5. Output
 IMDB Sentiment Analysis
 Accuracy: ~85%
@@ -142,6 +143,7 @@ Cat vs Dog Classifier
 Accuracy: ~90%
 
 Sample Prediction:
+---
 
 📈 6. Further Research
 Each project offers rich opportunities for further research:
