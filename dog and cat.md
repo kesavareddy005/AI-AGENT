@@ -1,3 +1,4 @@
+
 # 🐱🐶 Cat vs Dog Image Classification Project
 
 This repository presents a deep learning project that classifies images of cats and dogs using convolutional neural networks (CNNs) with TensorFlow and Keras.
@@ -14,24 +15,20 @@ This project includes:
 - **Model Training**: Optimizing the model using Binary Cross-Entropy loss.
 - **Evaluation & Visualization**: Visualizing loss and accuracy trends, as well as example predictions.
 
-The complete code is contained in the Jupyter notebook `cat_dog (1).ipynb`.
+The complete code is included below.
 
 ---
 
 ## 💻 2. Project Code
 
-Here’s a quick glimpse into the core code components of the project:
-
-### Data Mounting & Path Setup
-\```python
+```python
 from google.colab import drive
 drive.mount('/content/drive')
 
 train_path = '/content/drive/MyDrive/cat_dog'
-\```
 
-### Key Library Imports
-\```python
+```
+```python
 import os
 import matplotlib.pyplot as plt
 import numpy as np
@@ -45,55 +42,135 @@ from tensorflow.keras.layers import (
     LeakyReLU, BatchNormalization, InputLayer, RandomFlip
 )
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-\```
+from tensorflow.keras.losses import BinaryCrossentropy
+from tensorflow.keras.optimizers import Adam
 
-### Dataset Download
-\```python
+```
+```python
 !pip install gdown
 import gdown
 
 gdown.download('https://drive.google.com/uc?id=1pIdmLUSqocdVCJTHjks_lZF3WB_9g5QI', 'cat_and_dog.zip', quiet=False)
-\```
 
-### Model Definition
-\```python
+```
+```python
+base_dir = "/content/cat_and_dog.zip cat_and_dog"
+
+```
+```python
+img_size = (150, 150)
+batch_size = 32
+
+train_datagen = ImageDataGenerator(rescale=1./255, rotation_range=20, zoom_range=0.2, shear_range=0.2, horizontal_flip=True)
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+```
+```python
+# Adjust these paths based on your extracted folder structure
+train_dir = "/content/drive/MyDrive/cat_and_dog/train"
+test_dir = "/content/drive/MyDrive/cat_and_dog/test"
+
+img_size = (150, 150)
+batch_size = 32
+
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=20,
+    zoom_range=0.2,
+    shear_range=0.2,
+    horizontal_flip=True
+)
+
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+train_data = train_datagen.flow_from_directory(
+    train_dir,
+    target_size=img_size,
+    batch_size=batch_size,
+    class_mode='binary'
+)
+
+test_data = test_datagen.flow_from_directory(
+    test_dir,
+    target_size=img_size,
+    batch_size=batch_size,
+    class_mode='binary'
+)
+
+```
+```python
 model = Sequential([
-    InputLayer(input_shape=(150, 150, 3)),
-    RandomFlip("horizontal"),
-    Conv2D(32, (3, 3), activation='relu'),
+    Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)),
     MaxPooling2D(2, 2),
-    BatchNormalization(),
-    
+
     Conv2D(64, (3, 3), activation='relu'),
     MaxPooling2D(2, 2),
-    BatchNormalization(),
-    
+
+    Conv2D(128, (3, 3), activation='relu'),
+    MaxPooling2D(2, 2),
+
     Flatten(),
     Dense(128, activation='relu'),
     Dropout(0.5),
     Dense(1, activation='sigmoid')
 ])
-model.compile(optimizer=Adam(learning_rate=0.001),
-              loss=BinaryCrossentropy(),
-              metrics=['accuracy'])
-\```
 
-### Training
-\```python
-history = model.fit(
-    train_generator,
-    validation_data=validation_generator,
-    epochs=10
+```
+```python
+model.compile(
+    optimizer=Adam(learning_rate=0.001),
+    loss='binary_crossentropy',
+    metrics=['accuracy']
 )
-\```
 
-### Evaluation
-\```python
-plt.plot(history.history['accuracy'], label='Train Accuracy')
-plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-plt.legend()
-plt.show()
-\```
+history = model.fit(
+    train_data,
+    epochs=1,  # change to more epochs as needed
+    validation_data=test_data
+)
+
+```
+```python
+loss, accuracy = model.evaluate(test_data)
+print(f"Test Accuracy: {accuracy * 100:.2f}%")
+
+model.save("cat_dog_cnn_model.h5")
+
+```
+```python
+model.summary()
+
+```
+```python
+!pip install gradio
+
+import gradio as gr
+import tensorflow as tf
+import numpy as np
+from tensorflow.keras.preprocessing import image
+
+# Load the trained model
+model = tf.keras.models.load_model("cat_dog_cnn_model.h5")
+
+def predict_image(img):
+    img = img.resize((150, 150))
+    img_array = image.img_to_array(img)
+    img_array = img_array / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
+    prediction = model.predict(img_array)[0][0]
+    return "Dog" if prediction > 0.5 else "Cat"
+
+interface = gr.Interface(
+    fn=predict_image,
+    inputs=gr.Image(type="pil"),
+    outputs=gr.Text(label="Prediction"),
+    title="Cat vs Dog Classifier",
+    description="Upload an image to classify it as Cat or Dog"
+)
+
+interface.launch()
+
+```
 
 ---
 
@@ -129,8 +206,6 @@ The model achieves ~85-90% accuracy on the validation set after 10 epochs, showi
 ### Sample Predictions
 ![Sample Prediction Placeholder](https://via.placeholder.com/400x300?text=Sample+Predictions)
 
-The above image shows how the model confidently predicts whether an image is of a cat or dog.
-
 ---
 
 ## 🔬 6. Further Research
@@ -147,7 +222,7 @@ Here are some ideas to expand and enhance this project:
 
 ## 🚀 Conclusion
 
-This project demonstrates how deep learning can tackle image classification tasks efficiently. Feel free to fork this repo, explore the code in the `cat_dog (1).ipynb` notebook, and adapt it to your needs!
+This project demonstrates how deep learning can tackle image classification tasks efficiently. Feel free to fork this repo, explore the code, and adapt it to your needs!
 
 Happy coding! 🚀✨
 
