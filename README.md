@@ -74,7 +74,7 @@ This notebook leverages transfer learning for efficient and accurate image class
 ---
 
 
-###📊 4. Output
+📊 4. Output
 IMDB Sentiment Analysis
 Accuracy: ~85%
 
@@ -98,7 +98,7 @@ Accuracy: ~90%
 Sample Prediction:
 ---
 
-###📈 5. Further Research
+📈 5. Further Research
 Each project offers rich opportunities for further research:
 
 IMDB Sentiment Analysis
@@ -122,12 +122,12 @@ Test on more complex image datasets.
 
 Implement real-time image classification as a web app.
 
-###📜 7. Conclusion
+📜 7. Conclusion
 This repository demonstrates practical applications of machine learning and deep learning in natural language processing, tabular classification, and computer vision. It provides robust implementations that can be extended for real-world scenarios.
 
 We hope this documentation helps you understand and replicate these projects with ease. For detailed implementation, please refer to the respective Jupyter notebooks in this repository.
 
-###🚀 8. References & Resources
+🚀 8. References & Resources
 PyTorch Documentation
 
 Kaggle Datasets
